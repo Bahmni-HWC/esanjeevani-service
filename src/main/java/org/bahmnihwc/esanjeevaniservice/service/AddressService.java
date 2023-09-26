@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -44,5 +44,10 @@ public class AddressService {
         } catch (CsvValidationException e) {
             e.printStackTrace();
         }
+    }
+
+    public Address findAddressByStateDistrictAndSubDistrict(String state, String district, String subDistrict) {
+        Optional<Address> address = addressRepository.findTopByStateAndDistrictAndSubDistrict(state, district, subDistrict);
+        return address.orElse(null);
     }
 }
