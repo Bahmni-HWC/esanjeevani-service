@@ -5,9 +5,12 @@ import com.opencsv.exceptions.CsvValidationException;
 import org.bahmnihwc.esanjeevaniservice.model.Address;
 import org.bahmnihwc.esanjeevaniservice.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Optional;
 
 @Service
@@ -16,31 +19,37 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Value("classpath:addresshierarchy.csv")
+    private Resource csvResource;
+
     public void importCsvData() throws IOException {
 
-        try (CSVReader reader = new CSVReader(new FileReader("src/main/resources/addresshierarchy.csv"))) {
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-                Address address = new Address();
-                String[] str;
+        try (InputStream inputStream = csvResource.getInputStream();
+             InputStreamReader reader = new InputStreamReader(inputStream);
+             CSVReader csvReader = new CSVReader(reader)) {
 
-                str = line[0].split("%");
+                String[] line;
+                while ((line = csvReader.readNext()) != null) {
+                    Address address = new Address();
+                    String[] str;
 
-                address.setState(str[0].trim());
-                address.setStateCode(str[1].trim());
+                    str = line[0].split("%");
 
-                str = line[1].split("%");
+                    address.setState(str[0].trim());
+                    address.setStateCode(str[1].trim());
 
-                address.setDistrict(str[0].trim());
-                address.setDistrictCode(str[1].trim());
+                    str = line[1].split("%");
 
-                str = line[2].split("%");
+                    address.setDistrict(str[0].trim());
+                    address.setDistrictCode(str[1].trim());
 
-                address.setSubDistrict(str[0].trim());
-                address.setSubDistrictCode(str[1].trim());
+                    str = line[2].split("%");
 
-                addressRepository.save(address);
-            }
+                    address.setSubDistrict(str[0].trim());
+                    address.setSubDistrictCode(str[1].trim());
+
+                    addressRepository.save(address);
+                }
         } catch (CsvValidationException e) {
             e.printStackTrace();
         }
