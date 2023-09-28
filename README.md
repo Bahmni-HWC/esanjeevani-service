@@ -17,9 +17,9 @@ This service expose one API on the path `/esanjeevani-bridge/registerAndLaunch` 
 {
   "patient": {
     "name": {
-      "firstName": "test",
-      "lastName": "test",
-      "middleName": "test"
+      "firstName": "Test",
+      "lastName": "Sample",
+      "middleName": "Test"
     },
     "dateOfBirth": "2022-10-10",
     "age":24,
@@ -27,15 +27,15 @@ This service expose one API on the path `/esanjeevani-bridge/registerAndLaunch` 
     "gender": "Male",
     "address": {
       "state": "KARNATAKA",
-      "district": "BANGALORE",
-      "subDistrct": "BANGALORE",
-      "village": "BANGALORE",
+      "district": "BENGALURU RURAL",
+      "subDistrict": "HOSAKOTE",
+      "village": "ANUPAHALLI",
       "postalCode": "560001"
     }
   },
   "credentials": {
-    "username": "username",
-    "password": "password"
+    "username": "dummy",
+    "password": "duumy"
   }
 }
 ```
