@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.bahmnihwc.esanjeevaniservice.contract.RegisterAndLaunchRequest;
 import org.bahmnihwc.esanjeevaniservice.exceptions.ESanjeevaniLoginException;
 import org.bahmnihwc.esanjeevaniservice.exceptions.ESanjeevaniRegisterPatientException;
+import org.bahmnihwc.esanjeevaniservice.exceptions.LGDCodeNotFoundException;
 import org.bahmnihwc.esanjeevaniservice.service.LoginService;
 import org.bahmnihwc.esanjeevaniservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ESanjeevaniController {
             String ssoRedirectURL = loginService.getSSORedirectURL(registerAndLaunchRequest.getEsanjeevaniCredentials());
             return new ResponseEntity<>(ssoRedirectURL, HttpStatus.OK);
 
-        } catch (ESanjeevaniLoginException | ESanjeevaniRegisterPatientException e) {
+        } catch (ESanjeevaniLoginException | ESanjeevaniRegisterPatientException | LGDCodeNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
