@@ -12,7 +12,7 @@ This is a micro-service which is used to integrate with eSanjeevani application.
 - The service is added with proxy configurations in Bahmni-HWC docker compose. So do a `docker compose up -d` from Bahmni-HWC/bahmni-india-package repository.
 
 ### API Information
-This service expose one API on the path `/esanjeevani-bridge/registerAndLaunch` which is used to register a patient and launch the eSanjeevani application. The request body of the API is below
+This service expose one API on the path `/esanjeevani-bridge/registerAndLaunch` which is used to register a patient and launch the eSanjeevani application. The request body of the API is below in which abhaAddress and abhaNumber is optional.
 ```json
 {
   "patient": {
@@ -31,7 +31,9 @@ This service expose one API on the path `/esanjeevani-bridge/registerAndLaunch` 
       "subDistrict": "HOSAKOTE",
       "village": "ANUPAHALLI",
       "postalCode": "560001"
-    }
+    },
+    "abhaAddress": "",
+    "abhaNumber": ""
   },
   "credentials": {
     "username": "dummy",

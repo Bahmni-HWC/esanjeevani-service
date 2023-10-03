@@ -33,6 +33,12 @@ public class EsanjeevaniPatientMapper {
         createPatientRequest.setLastName(patient.getPatientName().getLastName());
         createPatientRequest.setGenderDisplay(patient.getGender().name());
         createPatientRequest.setGenderCode(mapGenderDisplayToCode(patient.getGender().name()));
+        if (patient.getAbhaAddress() != null && !patient.getAbhaAddress().isBlank()) {
+            createPatientRequest.setAbhaAddress(patient.getAbhaAddress());
+        }
+        if (patient.getAbhaNumber() != null && !patient.getAbhaNumber().isBlank()) {
+            createPatientRequest.setAbhaNumber(patient.getAbhaNumber());
+        }
         createPatientRequest.setLstPatientAddress(mapPatientAddress(patient));
         createPatientRequest.setLstPatientContactDetail(mapPatientContactDetails(patient));
         createPatientRequest.setIsBlock(false);
@@ -65,20 +71,20 @@ public class EsanjeevaniPatientMapper {
     }
 
     private static void isCompletePatientAddress(PatientAddress patientAddress) {
-        if(patientAddress.getState() == null || patientAddress.getDistrict() == null || patientAddress.getSubDistrict() == null){
+        if (patientAddress.getState() == null || patientAddress.getDistrict() == null || patientAddress.getSubDistrict() == null) {
             throw new NullPointerException("State or District or Sub-district cannot be null");
         }
     }
 
     private Address getLGDCOdeForPersonAddress(PatientAddress patientAddress) throws LGDCodeNotFoundException {
-        Address address = addressService.findAddressByStateDistrictAndSubDistrict(patientAddress.getState(),patientAddress.getDistrict(), patientAddress.getSubDistrict());
-        if(address != null) {
+        Address address = addressService.findAddressByStateDistrictAndSubDistrict(patientAddress.getState(), patientAddress.getDistrict(), patientAddress.getSubDistrict());
+        if (address != null) {
             return address;
         }
         throw new LGDCodeNotFoundException("LGD Code not found for " + patientAddress.getSubDistrict() + ", " + patientAddress.getDistrict() + ", " + patientAddress.getState());
     }
 
-    private  List<EsanjeevaniContactDetails> mapPatientContactDetails(Patient patient){
+    private List<EsanjeevaniContactDetails> mapPatientContactDetails(Patient patient) {
         EsanjeevaniContactDetails esanjeevaniContactDetails = new EsanjeevaniContactDetails();
         esanjeevaniContactDetails.setContactPointStatus(true);
         esanjeevaniContactDetails.setContactPointType("Phone");
@@ -87,12 +93,12 @@ public class EsanjeevaniPatientMapper {
         return Arrays.asList(esanjeevaniContactDetails);
     }
 
-    private int mapGenderDisplayToCode(String genderdisplay){
-        if(genderdisplay.equals("Male")){
+    private int mapGenderDisplayToCode(String genderdisplay) {
+        if (genderdisplay.equals("Male")) {
             return 1;
-        }else if(genderdisplay.equals("Female")){
+        } else if (genderdisplay.equals("Female")) {
             return 2;
-        }else{
+        } else {
             return 3;
         }
     }
