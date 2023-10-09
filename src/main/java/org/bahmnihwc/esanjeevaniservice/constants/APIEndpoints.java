@@ -4,4 +4,6 @@ public class APIEndpoints {
     public static final String PROVIDER_LOGIN = "/aus/api/ThirdPartyAuth/providerLogin";
     public static final String REGISTER_PATIENT = "/ps/api/v1/Patient";
     public static final String SSO_LOGIN = "/aus/api/ThirdPartyAuth/authenticateReference";
+
+    public static final String OPENMRS_AUDIT_URL = "/ws/rest/v1/auditlog";
 }
